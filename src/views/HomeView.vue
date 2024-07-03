@@ -4,8 +4,9 @@ import { onMounted, ref } from 'vue'
 import Category from '@/models/category';
 import categoryApi from '@/api/category'
 import productApi from '@/api/product';
-import CategorySlider from '@/components/CategorySlider.vue';
 import HomeImageContent from '@/components/HomeImageContent.vue';
+import ProductSearch from '@/components/ProductSearch.vue';
+import CategorySlider from '@/components/CategorySlider.vue';
 
 const loading = ref(false);
 const categories = ref<Category[]>([]);
@@ -36,6 +37,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <section class="my-8">
+    <ProductSearch />
+  </section>
   <section class="position-relative section-gap">
     <img class="w-100" src="/images/hero-image.png" />
 

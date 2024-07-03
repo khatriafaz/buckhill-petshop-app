@@ -16,7 +16,9 @@ export type ProductListFilters = {
 class ProductApi {
   public async list(filters: ProductListFilters = {}): Promise<Array<Product>> {
     return await http
-      .get('/v1/products', <any>filters)
+      .get('/v1/products', {
+        params: filters
+      })
       .then((response) => response.data.data)
       .then<Product[]>((items) => items.map((item: object) => Product.fromJson(item)))
   }
