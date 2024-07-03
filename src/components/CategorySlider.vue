@@ -15,7 +15,7 @@ defineProps({
 </script>
 
 <template>
-    <section class="py-12">
+    <section v-bind="$attrs">
         <h4 class="text-h4 text-capitalize text-primary mb-8">{{ category.title }}</h4>
 
         <Swiper :modules="swiperModules" :slides-per-view="5" navigation loop>
