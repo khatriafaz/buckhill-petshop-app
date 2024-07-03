@@ -7,6 +7,9 @@ import { createVuetify, type ThemeDefinition } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/autoplay'
 import './assets/main.css'
 
 const theme: ThemeDefinition = {

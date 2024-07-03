@@ -41,7 +41,7 @@ const isActive = (path) => {
             <v-btn prepend-icon="mdi-cart-outline" variant="outlined">
               Cart ({{ cartItems.length }})
             </v-btn>
-            <v-btn variant="outlined ms-3">Login</v-btn>
+            <v-btn variant="outlined" class="ms-3">Login</v-btn>
           </v-col>
         </v-row>
       </v-container>
