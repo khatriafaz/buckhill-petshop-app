@@ -35,6 +35,26 @@ onMounted(() => {
 </script>
 
 <template>
+  <section class="position-relative">
+    <img class="w-100 my-12" src="/images/hero-image.png" />
+
+    <div class="hero-sale-text d-flex flex-column align-start">
+      <div class="hero-text text-h2 text-white pa-4">Up to 30% sale</div>
+      <div class="hero-text text-subtitle-1 text-white pa-2 mt-2">On select dog food and toys</div>
+    </div>
+  </section>
   <CategorySlider v-if="featuredCategories[0]" :category="featuredCategories[0]"></CategorySlider>
   <CategorySlider v-if="featuredCategories[1]" :category="featuredCategories[1]"></CategorySlider>
 </template>
+
+<style>
+.hero-sale-text {
+  position: absolute;
+  top: 150px;
+  left: calc(150px - 48px);
+}
+
+.hero-text {
+  background-color: rgba(34, 34, 34, .3);
+}
+</style>

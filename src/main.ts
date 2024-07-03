@@ -33,7 +33,6 @@ const vuetify = createVuetify({
 
 import App from './App.vue'
 import router from './router'
-import type { ThemeDefinition } from 'vuetify'
 
 const app = createApp(App)
 
