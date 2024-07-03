@@ -19,7 +19,7 @@ const isActive = (path) => {
 
 <template>
   <v-app>
-    <v-app-bar :elevation="0" app color="primary">
+    <v-app-bar absolute :elevation="0" color="primary">
       <v-container>
         <v-row align="center" justify="space-between">
           <!-- Logo on the left -->
@@ -46,6 +46,31 @@ const isActive = (path) => {
         </v-row>
       </v-container>
     </v-app-bar>
-    <RouterView />
+    <v-main>
+      <v-container>
+        <RouterView />
+      </v-container>
+    </v-main>
+    <v-footer color="primary-light">
+      <v-container>
+        <v-row>
+          <v-col>
+            <div class="text-h4 text-primary font-weight-bold">Petshop</div>
+          </v-col>
+          <v-col>
+            <h5 class="text-h6">Petshop</h5>
+          </v-col>
+          <v-col>
+            <h5 class="text-h6">Links</h5>
+          </v-col>
+          <v-col>
+            <h5 class="text-h6">Links</h5>
+          </v-col>
+          <v-col>
+            <h5 class="text-h6">Links</h5>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-footer>
   </v-app>
 </template>

@@ -13,7 +13,8 @@ const theme: ThemeDefinition = {
   dark: false,
   colors: {
     primary: '#4EC690',
-    'on-primary': '#FFFFFF'
+    'on-primary': '#FFFFFF',
+    'primary-light': '#EDF5F1'
   }
 }
 

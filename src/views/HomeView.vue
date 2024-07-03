@@ -2,9 +2,7 @@
 </script>
 
 <template>
-  <main>
-    <v-btn>
-      Button
-    </v-btn>
-  </main>
+  <v-btn>
+    Button
+  </v-btn>
 </template>
