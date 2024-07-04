@@ -14,7 +14,8 @@ export default class Product {
     public category: Category,
     public metadata: ProductMetaData,
     public price: number,
-    public brand: Brand | null
+    public description?: string,
+    public brand?: Brand | null
   ) {}
 
   public get image(): string {
@@ -29,6 +30,7 @@ export default class Product {
       data.category,
       data.metadata,
       data.price,
+      data.description,
       data.brand
     )
   }

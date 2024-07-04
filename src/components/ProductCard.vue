@@ -29,7 +29,7 @@ const removeFromCart = () => {
 </script>
 
 <template>
-    <v-card variant="text" hover>
+    <v-card variant="text" hover :to="{ name: 'product', params: { uuid: product.uuid } }">
         <div class="pa-8">
             <v-img height="200px" :src="product.image"></v-img>
         </div>

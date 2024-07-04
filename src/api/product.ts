@@ -10,6 +10,12 @@ export type ProductListFilters = BaseListFilters & {
 }
 
 class ProductApi {
+  public async fetch(uuid: string): Promise<Product> {
+    return await http
+      .get(`/v1/product/${uuid}`)
+      .then((response) => response.data.data)
+      .then<Product>((item) => Product.fromJson(item))
+  }
   public async list(filters: ProductListFilters = {}): Promise<Array<Product>> {
     return await http
       .get('/v1/products', {
