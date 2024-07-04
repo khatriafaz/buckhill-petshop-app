@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import categoryApi from '@/api/category';
 import { useRoute } from 'vue-router';
 import type Category from '@/models/category';
@@ -18,6 +18,7 @@ const loading = ref(false);
 const loadingProducts = ref(false);
 
 const products = ref<Product[]>([]);
+const categories = ref<Category[]>([]);
 const brands = ref<Brand[]>([]);
 
 const selectedBrand = ref<string | null>(null)
@@ -36,11 +37,13 @@ const loadData = async () => {
     loading.value = true;
 
     const loadCategory = categoryApi.fetch(<string>route.params.uuid);
+    const loadCategories = categoryApi.list();
     const loadBrands = brandApi.list();
 
-    const [cat, brnds] = await Promise.all([loadCategory, loadBrands, loadProducts()]);
+    const [cat, cats, brnds] = await Promise.all([loadCategory, loadCategories, loadBrands, loadProducts()]);
 
     category.value = cat;
+    categories.value = cats;
     brands.value = brnds;
 
     loading.value = false;
@@ -57,6 +60,11 @@ const loadProducts = async () => {
 onMounted(() => {
     loadData();
 });
+
+watch(() => route.params.uuid, () => {
+    selectedBrand.value = null;
+    loadData();
+})
 </script>
 
 <template>
@@ -72,12 +80,34 @@ onMounted(() => {
         <v-row>
             <v-col cols="2">
                 <v-list lines="one">
+                    <v-list-group value="Categories">
+                        <template v-slot:activator="{ props }">
+                            <v-list-item v-bind="props" prepend-icon="mdi-filter-outline">
+                                <template v-slot:title>
+                                    <v-list-item-title class="font-weight-bold">Category</v-list-item-title>
+                                </template>
+                            </v-list-item>
+                        </template>
+                        <v-list-item :to="{ name: 'category', params: { uuid: category.uuid } }"
+                            v-for="category of categories" :key="category.uuid" :value="category.uuid">
+                            <template v-slot:title>
+                                <v-list-item-title class="text-capitalize">{{ category.title }}</v-list-item-title>
+                            </template>
+                        </v-list-item>
+                    </v-list-group>
+                </v-list>
+
+                <v-list lines="one">
                     <v-list-group value="Brands">
                         <template v-slot:activator="{ props }">
-                            <v-list-item v-bind="props" title="Brands"></v-list-item>
+                            <v-list-item v-bind="props" prepend-icon="mdi-filter-outline">
+                                <template v-slot:title>
+                                    <v-list-item-title class="font-weight-bold">Brands</v-list-item-title>
+                                </template>
+                            </v-list-item>
                         </template>
-                        <v-list-item @click="updateBrand(brand)" :active="selectedBrand === brand.uuid"
-                            active-color="info" v-for="brand of brands" :key="brand.uuid" :value="brand.uuid">
+                        <v-list-item @click="updateBrand(brand)" :active="selectedBrand === brand.uuid" color="info"
+                            v-for="brand of brands" :key="brand.uuid" :value="brand.uuid">
                             <template v-slot:title>
                                 <v-list-item-title class="text-capitalize">{{ brand.title }}</v-list-item-title>
                             </template>
