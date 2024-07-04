@@ -28,7 +28,7 @@ const productQuantity = computed({
         return cart.productCountInCart(product.value?.uuid as string)
     },
 
-    set(value) {
+    set(value: number) {
         if (value === 0) {
             cart.remove(product.value?.uuid as string)
         } else {

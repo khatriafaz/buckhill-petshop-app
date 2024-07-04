@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { computed, type PropType } from 'vue';
+import { VNumberInput } from 'vuetify/labs/VNumberInput'
+
 import Product from '@/models/product';
 import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
-import type { PropType } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const currency = useCurrencyStore();
 const cart = useCartStore();
 
@@ -19,17 +23,27 @@ const props = defineProps({
     }
 })
 
-const addToCart = () => {
-    cart.add(props.product.uuid);
-}
+const productQuantity = computed({
+    get() {
+        return cart.productCountInCart(props.product.uuid as string)
+    },
 
-const removeFromCart = () => {
-    cart.remove(props.product.uuid)
+    set(value: number) {
+        if (value === 0) {
+            cart.remove(props.product.uuid as string)
+        } else {
+            cart.add(props.product.uuid as string, value)
+        }
+    }
+});
+
+const navigateToProduct = () => {
+    router.push({ name: 'product', params: { uuid: props.product.uuid } })
 }
 </script>
 
 <template>
-    <v-card variant="text" hover :to="{ name: 'product', params: { uuid: product.uuid } }">
+    <v-card variant="text" hover @click="navigateToProduct">
         <div class="pa-8">
             <v-img height="200px" :src="product.image"></v-img>
         </div>
@@ -41,10 +55,10 @@ const removeFromCart = () => {
             <div class="text-subtitle-1 font-weight-bold mb-4">{{ currency.format(product.price) }}</div>
 
             <template v-if="showAddToCart">
-                <v-btn v-if="!cart.exists(product.uuid)" @click="addToCart" color="primary" prepend-icon="mdi-cart"
+                <v-number-input v-if="cart.exists(product.uuid)" control-variant="split"
+                    v-model:model-value="productQuantity" :width="150" variant="outlined"></v-number-input>
+                <v-btn v-else @click="cart.add(product.uuid)" color="primary" prepend-icon="mdi-cart"
                     text="Add to cart"></v-btn>
-                <v-btn v-else @click="removeFromCart" color="red-lighten-2" prepend-icon="mdi-cart"
-                    text="Remove from cart"></v-btn>
             </template>
         </v-card-text>
     </v-card>
