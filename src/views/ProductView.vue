@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import productApi from '@/api/product';
 import type Product from '@/models/product';
 
+import { VNumberInput } from 'vuetify/labs/VNumberInput'
 import ProductSearch from '@/components/ProductSearch.vue';
 import { useCurrencyStore } from '@/stores/currency';
 import { useCartStore } from '@/stores/cart';
@@ -21,6 +22,20 @@ const loadData = async () => {
     product.value = await productApi.fetch(route.params.uuid as string);
     loading.value = false;
 }
+
+const productQuantity = computed({
+    get() {
+        return cart.productCountInCart(product.value?.uuid as string)
+    },
+
+    set(value) {
+        if (value === 0) {
+            cart.remove(product.value?.uuid as string)
+        } else {
+            cart.add(product.value?.uuid as string, value)
+        }
+    }
+});
 
 onMounted(() => {
     loadData()
@@ -45,7 +60,9 @@ onMounted(() => {
 
                     <div class="text-h3 mb-4">{{ currency.format(product.price) }}</div>
 
-                    <v-btn @click="cart.add(product.uuid)" prepend-icon="mdi-cart" color="primary" size="large"
+                    <v-number-input v-if="cart.exists(product.uuid)" control-variant="split"
+                        v-model:model-value="productQuantity" :width="150"></v-number-input>
+                    <v-btn v-else @click="cart.add(product.uuid)" prepend-icon="mdi-cart" color="primary" size="large"
                         text="Add to cart"></v-btn>
                 </v-col>
             </v-row>

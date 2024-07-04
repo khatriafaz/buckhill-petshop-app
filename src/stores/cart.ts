@@ -42,7 +42,7 @@ export const useCartStore = defineStore('cart', () => {
   const productCountInCart = (productUuid: string): number => {
     const exists = items.value.find((item) => item.productUuid === productUuid)
 
-    if (exists) exists.quantity
+    if (exists) return exists.quantity
     return 0
   }
 
