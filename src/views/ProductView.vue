@@ -61,7 +61,7 @@ onMounted(() => {
                     <div class="text-h3 mb-4">{{ currency.format(product.price) }}</div>
 
                     <v-number-input v-if="cart.exists(product.uuid)" control-variant="split"
-                        v-model:model-value="productQuantity" :width="150"></v-number-input>
+                        v-model:model-value="productQuantity" :width="150" variant="outlined"></v-number-input>
                     <v-btn v-else @click="cart.add(product.uuid)" prepend-icon="mdi-cart" color="primary" size="large"
                         text="Add to cart"></v-btn>
                 </v-col>
