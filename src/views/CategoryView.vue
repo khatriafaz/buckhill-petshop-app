@@ -130,7 +130,7 @@ watch(() => route.params.uuid, () => {
                 </div>
                 <v-row v-else>
                     <v-col v-for="product of products" :key="product.uuid" cols="3">
-                        <ProductCard :product="product" />
+                        <ProductCard :product="product" :show-add-to-cart="true" />
                     </v-col>
                 </v-row>
             </v-col>

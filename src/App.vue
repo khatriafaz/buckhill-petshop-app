@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
+import { useCartStore } from './stores/cart';
 
 const route = useRoute();
+const cart = useCartStore();
 
 const links = ref([
   { text: 'Products', route: '/' },
   { text: 'Promotions', route: '/promotions' },
   { text: 'Blog', route: '/blog' }
 ])
-
-const cartItems = ref([]);
 
 const isActive = (path) => {
   return route.path === path;
@@ -39,7 +39,7 @@ const isActive = (path) => {
           <!-- Buttons on the right -->
           <v-col cols="auto" class="text-right">
             <v-btn prepend-icon="mdi-cart-outline" variant="outlined">
-              Cart ({{ cartItems.length }})
+              Cart ({{ cart.count }})
             </v-btn>
             <v-btn variant="outlined" class="ms-3">Login</v-btn>
           </v-col>
