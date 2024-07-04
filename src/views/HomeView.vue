@@ -14,14 +14,14 @@ const featuredCategories = ref<Category[]>([]);
 
 const loadData = async () => {
   loading.value = true;
-  categoryApi.list()
+  categoryApi.list({ limit: 2 })
     .then(async (loadedCategories) => {
       categories.value = loadedCategories;
       const filtered = loadedCategories.filter((_, i) => i < 2);
 
       featuredCategories.value = await Promise.all(filtered.map(async category => {
         category.products = await productApi.list({
-          limit: 10,
+          limit: 20,
           category: category.uuid
         });
 

@@ -1,12 +1,8 @@
-import { ref } from 'vue'
 import http from './shared/http'
 import Product from '@/models/product'
+import type { BaseListFilters } from './shared/types'
 
-export type ProductListFilters = {
-  page?: number
-  limit?: number
-  sortBy?: string
-  desc?: boolean
+export type ProductListFilters = BaseListFilters & {
   category?: string
   price?: number
   brand?: string
