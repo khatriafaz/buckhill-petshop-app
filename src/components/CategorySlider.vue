@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-
-const swiperModules = [Navigation, Autoplay];
-
 import Category from '@/models/category'
+import { useCurrencyStore } from '@/stores/currency';
+
+const currency = useCurrencyStore();
+const swiperModules = [Navigation, Autoplay];
 
 defineProps({
     category: {
@@ -29,7 +30,7 @@ defineProps({
 
                     <v-card-subtitle class="text-capitalize">{{ product.brand?.title }}</v-card-subtitle>
                     <v-card-text>
-                        <div class="text-subtitle-1 font-weight-bold">{{ product.price }}</div>
+                        <div class="text-subtitle-1 font-weight-bold">{{ currency.format(product.price) }}</div>
                     </v-card-text>
                 </v-card>
             </SwiperSlide>
