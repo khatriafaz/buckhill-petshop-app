@@ -46,7 +46,10 @@ onMounted(() => {
     <section class="my-8">
         <ProductSearch />
     </section>
-    <template v-if="product">
+    <section v-if="loading" class="text-center">
+        <v-progress-circular color="primary" indeterminate></v-progress-circular>
+    </section>
+    <template v-else-if="product">
         <div style="max-width: 1200px; margin-left: auto; margin-right: auto;">
             <v-breadcrumbs class="text-capitalize"
                 :items="['Homepage', product.category.title, product.title]"></v-breadcrumbs>
